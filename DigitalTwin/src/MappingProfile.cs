@@ -12,6 +12,12 @@ namespace DigitalTwin.src
             CreateMap<InputNewSensorDeviceDTO, SensorDevice>();
             CreateMap<InputUpdateSensorDeviceDTO, SensorDevice>();
             CreateMap<SensorDevice, ResultSensorDeviceDTO>();
+
+            CreateMap<RPM, ResultRPMDTO>();
+
+            CreateMap<Fuel, ResultFuelDTO>();
+
+            CreateMap<Temperature, ResultTemperatureDTO>();
         }
     }
 }

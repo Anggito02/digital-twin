@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
+using DigitalTwin.src;
+using DigitalTwin.src.Model.DTOs;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -6,38 +9,36 @@ namespace DigitalTwin.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RPMController : ControllerBase
+    public class RPMController(
+        DigitalTwinDBContext context,
+        IMapper mapper
+    ) : ControllerBase
     {
-        // GET: api/<RPMController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        private readonly DigitalTwinDBContext _context = context;
+        private readonly IMapper _mapper = mapper;
 
-        // GET api/<RPMController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{sensor_id}")]
+        public ActionResult<SuccessResultRPMDTO> Get(Guid sensor_id)
         {
-            return "value";
-        }
+            try {
+                var rpm = _context.RPMS.OrderByDescending(r => r.CreatedAtBySensor).FirstOrDefault(r => r.SensorDeviceId == sensor_id);
 
-        // POST api/<RPMController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+                var result = new SuccessResultRPMDTO
+                {
+                    Data = _mapper.Map<ResultRPMDTO>(rpm),
+                    Message = "Success Get Data"
+                };
 
-        // PUT api/<RPMController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+                return StatusCode(200, result);
+            } catch (Exception ex) {
+                var failedResult = new FailedResultRPMDTO
+                {
+                    Status = 500,
+                    Message = ex.Message
+                };
 
-        // DELETE api/<RPMController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+                return StatusCode(500, failedResult);
+            }
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using DigitalTwin.src;
+using DigitalTwin.src.Model.DTOs;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -6,38 +9,36 @@ namespace DigitalTwin.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TemperatureController : ControllerBase
+    public class TemperatureController(
+        DigitalTwinDBContext context,
+        IMapper mapper
+    ) : ControllerBase
     {
-        // GET: api/<TemperatureController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        private readonly DigitalTwinDBContext _context = context;
+        private readonly IMapper _mapper = mapper;
 
-        // GET api/<TemperatureController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{sensor_id}")]
+        public ActionResult<SuccessResultTemperatureDTO> Get(Guid sensor_id)
         {
-            return "value";
-        }
+            try {
+                var temperature = _context.TEMPERATURES.OrderByDescending(r => r.CreatedAtBySensor).FirstOrDefault(r => r.SensorDeviceId == sensor_id);
 
-        // POST api/<TemperatureController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+                var result = new SuccessResultTemperatureDTO
+                {
+                    Data = _mapper.Map<ResultTemperatureDTO>(temperature),
+                    Message = "Success Get Data"
+                };
+                
+                return StatusCode(200, result);
+            } catch (Exception ex) {
+                var failedResult = new FailedResultTemperatureDTO
+                {
+                    Status = 500,
+                    Message = ex.Message
+                };
 
-        // PUT api/<TemperatureController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<TemperatureController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+                return StatusCode(500, failedResult);
+            }
         }
     }
 }
