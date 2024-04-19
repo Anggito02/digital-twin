@@ -34,7 +34,7 @@ namespace DigitalTwin.Migrations
                     b.Property<DateTime>("CreatedAtBySensor")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<double>("EngineFuel")
@@ -68,7 +68,7 @@ namespace DigitalTwin.Migrations
                     b.Property<DateTime>("CreatedAtBySensor")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<double>("EngineRPM")
@@ -99,7 +99,7 @@ namespace DigitalTwin.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<double>("Height")
@@ -148,7 +148,7 @@ namespace DigitalTwin.Migrations
                     b.Property<DateTime>("CreatedAtBySensor")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<double>("EngineTemperature")

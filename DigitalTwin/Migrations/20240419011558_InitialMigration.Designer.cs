@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DigitalTwin.Migrations
 {
     [DbContext(typeof(DigitalTwinDBContext))]
-    [Migration("20240321080131_Initial")]
-    partial class Initial
+    [Migration("20240419011558_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,7 +37,7 @@ namespace DigitalTwin.Migrations
                     b.Property<DateTime>("CreatedAtBySensor")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<double>("EngineFuel")
@@ -71,7 +71,7 @@ namespace DigitalTwin.Migrations
                     b.Property<DateTime>("CreatedAtBySensor")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<double>("EngineRPM")
@@ -102,7 +102,7 @@ namespace DigitalTwin.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<double>("Height")
@@ -151,7 +151,7 @@ namespace DigitalTwin.Migrations
                     b.Property<DateTime>("CreatedAtBySensor")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<double>("EngineTemperature")
