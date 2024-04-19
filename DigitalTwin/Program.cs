@@ -1,3 +1,4 @@
+using AutoMapper;
 using DigitalTwin.src;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,15 @@ builder.Services.AddDbContext<DigitalTwinDBContext>(
         ServerVersion.AutoDetect(connectionString)
     )
 );
+
+// Automapper
+var mapperConfiguration = new MapperConfiguration(conf =>
+{
+    conf.AddProfile(typeof(MappingProfile));
+});
+
+var mapper = mapperConfiguration.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 var app = builder.Build();
 
