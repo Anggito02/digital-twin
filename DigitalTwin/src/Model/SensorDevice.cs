@@ -9,9 +9,6 @@
         public double Length { get; set; }
         public double Width { get; set; }
         public double Height { get; set; }
-
-        public required ICollection<Temperature> Temperatures { get; set; }
-        public required ICollection<Fuel> Fuels { get; set; }
-        public required ICollection<RPM> RPMs { get; set; }
+        public bool IsConnected { get; set; } = false;
     }
 }

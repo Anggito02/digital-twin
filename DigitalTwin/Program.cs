@@ -1,6 +1,10 @@
+using System.Text;
 using AutoMapper;
 using DigitalTwin.src;
+using DigitalTwin.src.Model;
 using Microsoft.EntityFrameworkCore;
+using MQTTnet;
+using MQTTnet.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 

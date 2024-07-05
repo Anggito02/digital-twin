@@ -16,14 +16,8 @@ namespace DigitalTwin.src.Model.DTOs
         public Guid Id { get; set; }
     }
 
-    public class ResultSensorDeviceDTO
+    public class ResultSensorDeviceDTO : BaseModel
     {
-        public Guid Id { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public DateTime DeletedAt { get; set; }
-
         public required string Name { get; set; }
         public required string Model { get; set; }
         public double OperatingVoltage { get; set; }

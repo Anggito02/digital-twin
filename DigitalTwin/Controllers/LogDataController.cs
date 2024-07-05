@@ -1,15 +1,16 @@
-﻿using AutoMapper;
+﻿using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
+
 using DigitalTwin.src;
 using DigitalTwin.src.Model.DTOs;
-using Microsoft.AspNetCore.Mvc;
+using DigitalTwin.src.Model;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace DigitalTwin.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TemperatureController(
+    public class LogDataController(
         DigitalTwinDBContext context,
         IMapper mapper
     ) : ControllerBase
@@ -17,26 +18,26 @@ namespace DigitalTwin.Controllers
         private readonly DigitalTwinDBContext _context = context;
         private readonly IMapper _mapper = mapper;
 
-        [HttpGet("{sensor_id}")]
-        public ActionResult<SuccessResultTemperatureDTO> Get(Guid sensor_id)
+        [HttpGet]
+        public ActionResult<SuccessResultLogDataDTO> Get()
         {
             try {
-                var temperature = _context.TEMPERATURES.OrderByDescending(r => r.CreatedAtBySensor).FirstOrDefault(r => r.SensorDeviceId == sensor_id);
+                var logDatas = _context.LOG_DATA
+                    .TakeLast(200)
+                    .ToList();
 
-                var result = new SuccessResultTemperatureDTO
-                {
-                    Data = _mapper.Map<ResultTemperatureDTO>(temperature),
+                var resultList = new SuccessResultLogDataDTO {
+                    Data = logDatas,
                     Message = "Success Get Data"
                 };
-                
-                return StatusCode(200, result);
-            } catch (Exception ex) {
-                var failedResult = new FailedResultTemperatureDTO
+
+                return StatusCode(200, resultList);
+            } catch(Exception ex) {
+                var failedResult = new FailedResultLogDataDTO
                 {
                     Status = 500,
                     Message = ex.Message
                 };
-
                 return StatusCode(500, failedResult);
             }
         }
