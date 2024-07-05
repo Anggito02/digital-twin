@@ -18,8 +18,8 @@ namespace DigitalTwin.Controllers
         private readonly DigitalTwinDBContext _context = context;
         private readonly IMapper _mapper = mapper;
 
-        [HttpGet("{id}")]
-        public ActionResult<SuccessResultUserDTO> Get(Guid id)
+        [HttpPost("/api/users/")]
+        public ActionResult<SuccessResultUserDTO> Post(Guid id)
         {
             try {
                 var user = _context.USERS.Find(id) ?? throw new KeyNotFoundException("User not found");
@@ -42,7 +42,7 @@ namespace DigitalTwin.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("/api/users/create")]
         public ActionResult<SuccessResultUserDTO> Post(InputNewUserDTO inputDto)
         {
             try {

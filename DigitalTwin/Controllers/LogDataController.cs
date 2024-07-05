@@ -23,7 +23,8 @@ namespace DigitalTwin.Controllers
         {
             try {
                 var logDatas = _context.LOG_DATA
-                    .TakeLast(200)
+                    .OrderByDescending(l => l._id)
+                    .Take(100)
                     .ToList();
 
                 var resultList = new SuccessResultLogDataDTO {

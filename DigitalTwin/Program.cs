@@ -3,8 +3,6 @@ using AutoMapper;
 using DigitalTwin.src;
 using DigitalTwin.src.Model;
 using Microsoft.EntityFrameworkCore;
-using MQTTnet;
-using MQTTnet.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,7 +39,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
